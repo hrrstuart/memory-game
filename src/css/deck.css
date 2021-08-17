@@ -1,0 +1,26 @@
+.deck {
+    width: 750px;
+}
+
+.card-div {
+    padding: 1px;
+    margin: 10px;
+    min-width: 100px;
+    min-height: 100px;
+    text-align: center;
+}
+
+.card-div.flipped {
+    background-color: rgb(208, 208, 219);
+    box-shadow: 4px 4px 4px black;
+}
+
+.card-div.unflipped {
+    background-color: rgb(150, 150, 150);
+}
+
+img#card-img {
+    max-width: 75px;
+    display: inline-block;
+    margin: 0 5px;
+}
