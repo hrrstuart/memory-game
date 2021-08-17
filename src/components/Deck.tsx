@@ -7,7 +7,8 @@ export default class Deck extends React.Component<{}, IState> {
     constructor(props: any) {
         super(props);
         this.state = {
-            deck: []
+            deck: [],
+            matchedCards: 0
         }
         this.checkCard = this.checkCard.bind(this);
     }
@@ -44,20 +45,36 @@ export default class Deck extends React.Component<{}, IState> {
         else {
             const otherChoice: ICard = chosenCards[0];
             if (otherChoice.key === chosenCard.key) {
-                alert('yes');
+                this.correctMatch(chosenCard, otherChoice);
             }
             else {
-                alert('no');
+                this.incorrectMatch(chosenCard, otherChoice);
             }
             this.setState({ currentlyChosen: [] });
         }
+    }
+
+    correctMatch(fC: ICard, sC: ICard) {
+        this.setState(prevState => {
+            return {
+                matchedCards: prevState.matchedCards + 1,
+            }
+        });
+        fC.flipCard = () => {};
+        sC.flipCard = () => {};
+    }
+
+    incorrectMatch(fC: ICard, sC: ICard) {
+        setTimeout(() => {
+            fC.flipCard('fC');
+            sC.flipCard('sC');
+        }, 600);
     }
 
     render() {
         const returnCards = (): JSX.Element[] => {
             return this.state.deck.map((img, index) => (
                 <li key={index}>
-                    {console.log(img)}
                     <Card img={img} key={img} checkCard={this.checkCard} />
                 </li>
             ));
@@ -65,6 +82,7 @@ export default class Deck extends React.Component<{}, IState> {
 
         return (
             <div className="deck">
+                <h1>Score: {this.state.matchedCards}</h1>
                 <ul>
                     {returnCards()}
                 </ul>
