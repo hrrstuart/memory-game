@@ -14,8 +14,8 @@ export default function Card(props: IState) {
         );
     }
 
-    function flipCard() {
-        console.log('flip!')
+    function flipCard(str?: string) {
+        console.log(str ? str : 'flip!')
         setIsFlipped(!isFlipped)
     }
 
