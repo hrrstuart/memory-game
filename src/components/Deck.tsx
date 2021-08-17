@@ -12,12 +12,12 @@ export default class Deck extends React.Component<{}, IState> {
         this.checkCard = this.checkCard.bind(this);
     }
 
-    async componentDidMount() {
+    async componentDidMount(): Promise<void> {
         await this.createDeck();
         this.shuffleDeck();
     }
     
-    async createDeck() {
+    async createDeck(): Promise<void> {
         const array = ["mario", "luigi", "peach", "toad", "yoshi", "lwario", "wario", "bowser"]
             .map(img => `/images/${img}.png`);
 
@@ -36,17 +36,20 @@ export default class Deck extends React.Component<{}, IState> {
 
     checkCard(chosenCard: ICard): void {
         chosenCard.flipCard();
-        if (!this.state.currentlyChosen) {
+        const chosenCards = this.state.currentlyChosen;
+        
+        if (!chosenCards?.length) {
             this.setState({ currentlyChosen: [ chosenCard ] });
         }
         else {
-            const otherChoice: ICard = this.state.currentlyChosen[0];
+            const otherChoice: ICard = chosenCards[0];
             if (otherChoice.key === chosenCard.key) {
                 alert('yes');
             }
             else {
                 alert('no');
             }
+            this.setState({ currentlyChosen: [] });
         }
     }
 
@@ -54,6 +57,7 @@ export default class Deck extends React.Component<{}, IState> {
         const returnCards = (): JSX.Element[] => {
             return this.state.deck.map((img, index) => (
                 <li key={index}>
+                    {console.log(img)}
                     <Card img={img} key={img} checkCard={this.checkCard} />
                 </li>
             ));
