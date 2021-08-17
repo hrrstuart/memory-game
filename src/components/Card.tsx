@@ -3,7 +3,7 @@ import ReactCardFlip from 'react-card-flip';
 import IState from '../types/CardState';
 
 export default function Card(props: IState) {
-    const { img, key } = props;
+    const { img } = props;
     const [isFlipped, setIsFlipped] =  useState<boolean>(false);
 
     function cardDiv(className: string, src: string): JSX.Element {
@@ -21,7 +21,7 @@ export default function Card(props: IState) {
 
     function handleClick() {
         flipCard();
-        props.checkCard({ key, flipCard })
+        props.checkCard({ key: img, flipCard })
     }
 
     return (
